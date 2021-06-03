@@ -5,5 +5,5 @@ This project aims to identify enhancer-promoter important for lineage commitment
 Does this work?
 
 Optional further analysis: \
-#^ use eQTL data \
-#^ integrate HiC data for physical contact information \
+*use eQTL data \
+*integrate HiC data for physical contact information 
