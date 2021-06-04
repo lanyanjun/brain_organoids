@@ -10,8 +10,7 @@ pacman::p_load(tidyverse, edgeR, data.table, scales, gtools, Seurat, rio, DT, Ma
 source(file.path(my.path, "R", "utilities.R"))
 
 # set data path
-my.path = "/home/yanjun/Projects/Brain_organoids/Analysis/hBO/annotation_Fantom5/"
-
+my_path = "/home/yanjun/Projects/Brain_organoids/Analysis/hBO/annotation_SCAFE_v3"
 
 # Annotate clusters using cellbarcode idendity from previous Seurat object ------------------------
 # Prepare old cell idendities for transfer to new Seurat objects, the new annotation should not change 
@@ -28,8 +27,8 @@ print(Seurat_all_old_df %>% group_by(orig.ident, seurat_clusters) %>% count())
 # In this case the old cluster number and cells/cluster are similar to the new objects
 
 # pre-processing the annotation file --------------------------------------------------------------
-annotation = read_tsv("/home/yanjun/Projects/Brain_organoids/Analysis/hBO/annotation_SCAFE_v3/data/pool_all/annotate/pool_all/bed/pool_all.CRE.annot.bed.gz", col_names = FALSE)
-annotation = read_tsv("/home/yanjun/Projects/Brain_organoids/Analysis/hBO/annotation_SCAFE_v3/data/pool_all/annotate/pool_all/log/pool_all.CRE.info.tsv.gz")
+annotation = read_tsv(paste0(my_path, "/data/pool_all/annotate/pool_all/bed/pool_all.CRE.annot.bed.gz"), col_names = FALSE)
+annotation = read_tsv(paste0(my_path, "/data/pool_all/annotate/pool_all/log/pool_all.CRE.info.tsv.gz"))
 
 # change underscore to hyphen (due to Seurat convention)
 annotation$CREID <- sapply(annotation$CREID, gsub, 
@@ -41,7 +40,7 @@ annotation$CREID <- sapply(annotation$CREID, gsub,
 
 # generation of Seurat object for 40days timepoint ------------------------------------------------
 # read raw data
-dat.ref <- Read10X("/home/yanjun/Projects/Brain_organoids/Analysis/hBO/annotation_SCAFE_v3/data/pool_all/count/40days/matrix/")
+dat.ref <- Read10X(paste0(my_path, "/data/pool_all/count/40days/matrix/"))
 colnames(dat.ref) <- paste0("40_Days_", colnames(dat.ref))
 
 # create Seurat object
@@ -136,9 +135,9 @@ Seurat_40d_markers_loose <- FindAllMarkers(Seurat_40d,
                                            only.pos = F)
 
 # save data
-write_csv(Seurat_40d_markers, "/home/yanjun/Projects/Brain_organoids/Analysis_v3_git/Brain_organoids/data/Seurat/Seurat_40d_markers.tsv")
-write_csv(Seurat_40d_markers_loose, "/home/yanjun/Projects/Brain_organoids/Analysis_v3_git/Brain_organoids/data/Seurat/Seurat_40d_markers_loose.tsv")
-saveRDS(Seurat_40d, "/home/yanjun/Projects/Brain_organoids/Analysis_v3_git/Brain_organoids/data/Seurat/40days.rds")
+write_csv(Seurat_40d_markers, "~/data/Seurat/Seurat_40d_markers.tsv")
+write_csv(Seurat_40d_markers_loose, "~/data/Seurat/Seurat_40d_markers_loose.tsv")
+saveRDS(Seurat_40d, "~/data/Seurat/40days.rds")
 
 
 
