@@ -6,3 +6,5 @@ Optional further analysis:
 * use eQTL data to validate the enhancer-promoter pairs
 * integrate HiC data for physical contact information 
 * overlap public data such as SNPs data/human gained region data
+
+
